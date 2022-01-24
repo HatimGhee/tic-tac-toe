@@ -9,6 +9,7 @@ export default class Game extends React.Component {
       history: [
         {
           squares: Array(9).fill(null),
+          rowColumn: {}
         },
       ],
       stepNumber: 0,
@@ -20,12 +21,13 @@ export default class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+    const rowColumn = this.getBoardMatrix(i);
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
-      history: history.concat([{ squares: squares }]),
+      history: history.concat([{ squares: squares, ...rowColumn }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
     });
@@ -38,17 +40,24 @@ export default class Game extends React.Component {
     })
   }
 
+  getBoardMatrix(index, width = 3) {
+    let row = Math.floor(index / width) + 1
+    let column = Math.floor(index % width) + 1;
+
+    return { row: row, col: column};
+  }
+
+  buildMoveMsg(step, move) {
+    return "Go to move #" + move + ' (row: ' + step.row + ', col: ' + step.col +')';
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    console.log('outside moves')
-    console.log(history)
     const moves = history.map((step, move) => {
-      const desc = move ? "Go to move #" + move : "Go to game start";
-      console.log('=====================move #:', move)
-      console.log(step)
+      const desc = move ? this.buildMoveMsg(step, move) : "Go to game start";
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{desc}</button>

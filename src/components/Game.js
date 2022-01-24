@@ -9,7 +9,8 @@ export default class Game extends React.Component {
       history: [
         {
           squares: Array(9).fill(null),
-          rowColumn: {}
+          rowColumn: {},
+          move: 0,
         },
       ],
       stepNumber: 0,
@@ -27,7 +28,7 @@ export default class Game extends React.Component {
     }
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
-      history: history.concat([{ squares: squares, ...rowColumn }]),
+      history: history.concat([{ squares: squares, ...rowColumn, move: i }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
     });
@@ -78,6 +79,7 @@ export default class Game extends React.Component {
           <Board
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
+            lastMove={current.move}
           />
         </div>
         <div className="game-info">

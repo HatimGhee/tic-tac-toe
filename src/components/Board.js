@@ -4,10 +4,12 @@ import Square from "./Square";
 export default class Board extends React.Component {
 
   renderSquare(i) {
+    let isFontBold = this.props.lastMove === i;
     return (
       <Square
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
+        isFontBold={isFontBold}
       />
     );
   }

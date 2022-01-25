@@ -54,6 +54,13 @@ export default class Game extends React.Component {
     );
   }
 
+  sortMoves() {
+    const historyReversed = this.state.history.reverse();
+    this.setState({
+      history: historyReversed
+    })
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -86,6 +93,7 @@ export default class Game extends React.Component {
           />
         </div>
         <div className="game-info">
+          <button onClick={() => {this.sortMoves()}}>Sort</button>
           <div className="status">{status}</div>
           <ol>{moves}</ol>
         </div>

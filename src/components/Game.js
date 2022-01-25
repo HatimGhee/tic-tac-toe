@@ -37,19 +37,21 @@ export default class Game extends React.Component {
   jumpTo(step) {
     this.setState({
       stepNumber: step,
-      xIsNext: (step % 2) === 0,
-    })
+      xIsNext: step % 2 === 0,
+    });
   }
 
   getBoardMatrix(index, width = 3) {
-    let row = Math.floor(index / width) + 1
+    let row = Math.floor(index / width) + 1;
     let column = Math.floor(index % width) + 1;
 
-    return { row: row, col: column};
+    return { row: row, col: column };
   }
 
   buildMoveMsg(step, move) {
-    return "Go to move #" + move + ' (row: ' + step.row + ', col: ' + step.col +')';
+    return (
+      "Go to move #" + move + " (row: " + step.row + ", col: " + step.col + ")"
+    );
   }
 
   render() {
@@ -80,6 +82,7 @@ export default class Game extends React.Component {
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
             lastMove={current.move}
+            stepNumber={this.state.stepNumber}
           />
         </div>
         <div className="game-info">

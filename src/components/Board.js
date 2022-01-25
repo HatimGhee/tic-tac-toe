@@ -2,10 +2,14 @@ import React from "react";
 import Square from "./Square";
 
 export default function Board(props) {
+  let counter = 0;
+
   let renderSquare = (i) => {
     let isFontBold = props.lastMove === i && props.stepNumber > 0;
+
     return (
       <Square
+        key={i}
         value={props.squares[i]}
         onClick={() => props.onClick(i)}
         isFontBold={isFontBold}
@@ -13,23 +17,17 @@ export default function Board(props) {
     );
   };
 
-  return (
-    <div>
-      <div className="board-row">
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
+  let renderRow = (i) => {
+    let row = [...Array(3).keys()].map((a) => renderSquare(counter++));
+
+    return (
+      <div className="board-row" key={i}>
+        {row}
       </div>
-      <div className="board-row">
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </div>
-      <div className="board-row">
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
-      </div>
-    </div>
-  );
+    );
+  };
+
+  let rows = [...Array(3).keys()].map(renderRow);
+
+  return <div>{rows}</div>;
 }

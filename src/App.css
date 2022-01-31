@@ -33,9 +33,13 @@ ol, ul {
 }
 
 .square-bold {
-  background: rgb(183, 213, 218);
+  background: rgb(164, 160, 230);
   font-weight: bold;
   font-size: 24px;
+}
+
+.winning-square {
+  background: rgb(183, 213, 218);
 }
 
 .square:focus {

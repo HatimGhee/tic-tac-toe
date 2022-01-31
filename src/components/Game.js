@@ -1,6 +1,6 @@
 import React from "react";
 import Board from "./Board";
-import calculateWinner from "../helper/UtilService";
+import getWinningMoves from "../helper/UtilService";
 
 export default class Game extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ export default class Game extends React.Component {
     const current = history[history.length - 1];
     const squares = current.squares.slice();
     const rowColumn = this.getBoardMatrix(i);
-    if (calculateWinner(squares) || squares[i]) {
+    if (getWinningMoves(squares) || squares[i]) {
       return;
     }
     squares[i] = this.state.xIsNext ? "X" : "O";
@@ -64,7 +64,7 @@ export default class Game extends React.Component {
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+    const winningMoves = getWinningMoves(current.squares);
 
     const moves = history.map((step, move) => {
       const desc = move ? this.buildMoveMsg(step, move) : "Go to game start";
@@ -76,8 +76,8 @@ export default class Game extends React.Component {
     });
 
     let status;
-    if (winner) {
-      status = "Winner: " + winner;
+    if (winningMoves) {
+      status = "Winner: " + current.squares[winningMoves[0]];
     } else {
       status = "Next player: " + (this.state.xIsNext ? "X" : "O");
     }
@@ -90,6 +90,7 @@ export default class Game extends React.Component {
             onClick={(i) => this.handleClick(i)}
             lastMove={current.move}
             stepNumber={this.state.stepNumber}
+            winningMoves={winningMoves ?? []}
           />
         </div>
         <div className="game-info">

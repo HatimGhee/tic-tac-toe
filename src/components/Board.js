@@ -5,7 +5,6 @@ export default function Board(props) {
   let counter = 0;
 
   let renderSquare = (i) => {
-
     let isWinningSquare = props.winningMoves.includes(i);
     let isFontBold = props.lastMove === i && props.stepNumber > 0;
 

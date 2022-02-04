@@ -57,8 +57,18 @@ export default class Game extends React.Component {
   sortMoves() {
     const historyReversed = this.state.history.reverse();
     this.setState({
-      history: historyReversed
-    })
+      history: historyReversed,
+    });
+  }
+
+  resolveStatus(winningMoves, currentSquares) {
+    if (winningMoves) {
+      return "Winner: " + currentSquares[winningMoves[0]];
+    } else if (!currentSquares.includes(null)) {
+      return "Game Drawn";
+    } else {
+      return "Next player: " + (this.state.xIsNext ? "X" : "O");
+    }
   }
 
   render() {
@@ -75,13 +85,6 @@ export default class Game extends React.Component {
       );
     });
 
-    let status;
-    if (winningMoves) {
-      status = "Winner: " + current.squares[winningMoves[0]];
-    } else {
-      status = "Next player: " + (this.state.xIsNext ? "X" : "O");
-    }
-
     return (
       <div className="game">
         <div className="game-board">
@@ -94,8 +97,16 @@ export default class Game extends React.Component {
           />
         </div>
         <div className="game-info">
-          <button onClick={() => {this.sortMoves()}}>Sort</button>
-          <div className="status">{status}</div>
+          <button
+            onClick={() => {
+              this.sortMoves();
+            }}
+          >
+            Sort
+          </button>
+          <div className="status">
+            {this.resolveStatus(winningMoves, current.squares)}
+          </div>
           <ol>{moves}</ol>
         </div>
       </div>

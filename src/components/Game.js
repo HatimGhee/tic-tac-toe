@@ -80,7 +80,7 @@ export default class Game extends React.Component {
       const desc = move ? this.buildMoveMsg(step, move) : "Go to game start";
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button className="btn btn-primary" onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
     });

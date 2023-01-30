@@ -58,3 +58,12 @@ ol, ul {
 .game-info {
   margin-left: 20px;
 }
+
+.btn {
+  padding: 5px 10px;
+  margin: 10px;
+}
+
+.btn-primary {
+  background: #ddd;
+}
